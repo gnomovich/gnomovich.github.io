@@ -171,6 +171,9 @@ function handleKeyPress(event) {
       if (puzzleData.grid[activeCellRow][activeCellCol].letter === key) {
         puzzleData.grid[activeCellRow][activeCellCol].isCorrect = true;
       }
+      else {
+        puzzleData.grid[activeCellRow][activeCellCol].isCorrect = false;
+      }
       //Logic to move to the next cell.
         if (writeRowMode) {
             // Move to the next cell in the row
