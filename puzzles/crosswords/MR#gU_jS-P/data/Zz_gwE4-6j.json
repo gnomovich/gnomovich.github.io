@@ -1,0 +1,57 @@
+{
+    "number": 1,
+    "grid": [
+      [
+        { "letter": "L", "isBlackSquare": false, "acrossNumber": 1, "downNumber": 1, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "U", "isBlackSquare": false, "acrossNumber": null, "downNumber": 2, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "C", "isBlackSquare": false, "acrossNumber": null, "downNumber": 3, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": null, "downNumber": 4, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "O", "isBlackSquare": false, "acrossNumber": null, "downNumber": 5, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": 2, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "E", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "L", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "I", "isBlackSquare": false, "acrossNumber": 3, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "I", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "S", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "C", "isBlackSquare": false, "acrossNumber": 4, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "O", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "T", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "I", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": 5, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "S", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "S", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "O", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ]
+    ],
+    "clues": {
+      "across": [
+        { "number": 1, "clue": "A base de uma sociedade capitalista.", "startRow": 0, "startCol": 0, "length": 5 },
+        { "number": 2, "clue": "Interface aquático.", "startRow": 1, "startCol": 0, "length": 5 },
+        { "number": 3, "clue": "Toma as cores do arco-iris.", "startRow": 2, "startCol": 0, "length": 5 },
+        { "number": 4, "clue": "Mamífero diúrno plantígrado de cauda longa que pode ser encontrado na floresta do Amazonas.", "startRow": 3, "startCol": 0, "length": 5 },
+        { "number": 5, "clue": "Usa pressão para aliviar congestão.", "startRow": 4, "startCol": 0, "length": 5 }
+      ],
+      "down": [
+        { "number": 1, "clue": "Liberta da religião.", "startRow": 0, "startCol": 0, "length": 5 },
+        { "number": 2, "clue": "Gritos.", "startRow": 0, "startCol": 1, "length": 5 },
+        { "number": 3, "clue": "Jantas.", "startRow": 0, "startCol": 2, "length": 5 },
+        { "number": 4, "clue": "Pista.", "startRow": 0, "startCol": 3, "length": 5 },
+        { "number": 5, "clue": "Árvore ou zona de Lisboa no singular.", "startRow": 0, "startCol": 4, "length": 5 }
+      ]
+    }
+  }
+

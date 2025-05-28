@@ -1,0 +1,57 @@
+{
+    "number": 2,
+    "grid": [
+      [
+        { "letter": "P", "isBlackSquare": false, "acrossNumber": 1, "downNumber": 1, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "E", "isBlackSquare": false, "acrossNumber": null, "downNumber": 2, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "N", "isBlackSquare": false, "acrossNumber": null, "downNumber": 3, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": 4, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": null, "downNumber": 5, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": 2, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "C", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "E", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "N", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "O", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": 3, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "O", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "S", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "S", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "T", "isBlackSquare": false, "acrossNumber": 4, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "S", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "C", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ],
+      [
+        { "letter": "O", "isBlackSquare": false, "acrossNumber": 5, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "E", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "A", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" },
+        { "letter": "R", "isBlackSquare": false, "acrossNumber": null, "downNumber": null, "isCorrect": false, "userEnteredLetter": "" }
+      ]
+    ],
+    "clues": {
+      "across": [
+        { "number": 1, "clue": "O que faz um utente de serviços públicos.", "startRow": 0, "startCol": 0, "length": 5 },
+        { "number": 2, "clue": "Cumprimento visual", "startRow": 1, "startCol": 0, "length": 5 },
+        { "number": 3, "clue": "Não as há sem espinhos", "startRow": 2, "startCol": 0, "length": 5 },
+        { "number": 4, "clue": "Onde se pode comer e ouvir fado.", "startRow": 3, "startCol": 0, "length": 5 },
+        { "number": 5, "clue": "Expor ao ar roupa para secar (Bras.).", "startRow": 4, "startCol": 0, "length": 5 }
+      ],
+      "down": [
+        { "number": 1, "clue": "Catarse de dor e alegria que metade do mundo pode sentir.", "startRow": 0, "startCol": 0, "length": 5 },
+        { "number": 2, "clue": "Refletir sonoramente.", "startRow": 0, "startCol": 1, "length": 5 },
+        { "number": 3, "clue": "Naquele.", "startRow": 0, "startCol": 2, "length": 5 },
+        { "number": 4, "clue": "Psitacídeo com um característico leque de penas vermelhas.", "startRow": 0, "startCol": 3, "length": 5 },
+        { "number": 5, "clue": "Corar.", "startRow": 0, "startCol": 4, "length": 5 }
+      ]
+    }
+  }
+

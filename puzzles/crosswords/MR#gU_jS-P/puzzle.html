@@ -1,0 +1,55 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Puzzle </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="assets/main.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>    
+  </head>
+<body>
+    <div class="container mt-4">
+        
+    <h1 id="crossword-number"></h1>
+
+    <div class="row" id="crossword-container">
+      <div class="col" style="min-width: 350px;">
+        <canvas id="crossword-canvas" width="350" height="350"></canvas>
+      </div>
+        <div class="col" id="clue-container">
+          <div id="across-clues">
+            <h3>Horizontal</h3>
+            <ul id="across-clue-list"></ul>
+          </div>
+          <div id="down-clues">
+            <h3>Vertical</h3>
+            <ul id="down-clue-list"></ul>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+   
+    
+    <script src="./assets/main.js"></script>
+    <script>
+        const paramsString = window.location.search;
+        const searchParams = new URLSearchParams(paramsString);
+        puzzleCode = searchParams.get("code");
+        basePath = "./data";
+        puzzleData = {};
+        // Initialize the puzzle when the page loads
+        window.addEventListener('load', () => {
+            loadPuzzleData(basePath + "/" + puzzleCode + '.json');
+        });
+    </script>
+
+</body>
+</html>
