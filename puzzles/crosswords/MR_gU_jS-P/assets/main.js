@@ -10,7 +10,8 @@ const gridXOffset = 20; // Offset to position the grid within the canvas
 const gridYOffset = 20; // Offset to position the grid within the canvas
 const cluesYOffset = 20; // Offset between grid and clues section
 const cluesHeight = 60; // Height of the clues section in pixels
-const keyboardCellSize = 20; // Size of each key cell in pixels
+const keyboardCellSize = 25; // Size of each key cell in pixels
+const keyboardCellGap = 5; // Gap between keyboard cells in pixels
 
 const keys = [['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
 ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ç'],
@@ -34,10 +35,10 @@ function initializePuzzle(data) {
     computedGridXOffset = (canvas.width - (data.grid[0].length * gridCellSize)) / 2;
     computedCluesYOffset = gridYOffset + (data.grid.length * gridCellSize) + cluesYOffset;
 
-    keyboardHeight = keys.length * (keyboardCellSize + 3) + 10; // Calculate keyboard height based on number of rows and cell size
+    keyboardHeight = keys.length * (keyboardCellSize + keyboardCellGap) + 10; // Calculate keyboard height based on number of rows and cell size
     keyboardYOffset = computedCluesYOffset + keyboardHeight; // Offset for the keyboard section
-    keyboardXOffset = (canvas.width - (keys[0].length * (keyboardCellSize + 3) + 10)) / 2; // Center the keyboard in the canvas
-    keyboardwidth = keys[0].length * (keyboardCellSize + 3) + 10; // Calculate keyboard width based on number of columns and cell size
+    keyboardXOffset = (canvas.width - (keys[0].length * (keyboardCellSize + keyboardCellGap) + 10)) / 2; // Center the keyboard in the canvas
+    keyboardwidth = keys[0].length * (keyboardCellSize + keyboardCellGap) + 10; // Calculate keyboard width based on number of columns and cell size
     
 
     renderGrid(data.grid);
@@ -169,8 +170,8 @@ function renderKeyboardCanvas(pressedkey='') {
 
     keys.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
-            const x = colIndex * (keyboardCellSize + 3) + keyboardXOffset + 6;
-            const y = rowIndex * (keyboardCellSize + 3) + keyboardYOffset + 6;
+            const x = colIndex * (keyboardCellSize + keyboardCellGap) + keyboardXOffset + 6;
+            const y = rowIndex * (keyboardCellSize + keyboardCellGap) + keyboardYOffset + 6;
             letter = keys[rowIndex][colIndex];
             if (letter !== '') {
                 ctx.strokeStyle = 'black'; // Cell border
@@ -210,8 +211,8 @@ function handleCanvasClick(event) {
     // deal with clicks in the keyboard area
     const keyboardX = event.clientX - rect.left - keyboardXOffset;
     const keyboardY = event.clientY - rect.top - keyboardYOffset;
-    const keyboardCol = Math.floor(keyboardX / (keyboardCellSize + 3));
-    const keyboardRow = Math.floor(keyboardY / (keyboardCellSize + 3));
+    const keyboardCol = Math.floor(keyboardX / (keyboardCellSize + keyboardCellGap));
+    const keyboardRow = Math.floor(keyboardY / (keyboardCellSize + keyboardCellGap));
     if (keyboardRow >= 0 && keyboardRow < keys.length && keyboardCol >= 0 && keyboardCol < keys[0].length) {
         const letter = keys[keyboardRow][keyboardCol];
         // If the clicked key is backspace, handle it separately
