@@ -39,7 +39,7 @@
     ],
     "clues": {
       "across": [
-        { "number": 1, "clue": "A base de uma sociedade capitalista.", "startRow": 0, "startCol": 0, "length": 5 },
+        { "number": 1, "clue": "Pilar de uma sociedade capitalista.", "startRow": 0, "startCol": 0, "length": 5 },
         { "number": 2, "clue": "Interface aquático.", "startRow": 1, "startCol": 0, "length": 5 },
         { "number": 3, "clue": "Toma as cores do arco-iris.", "startRow": 2, "startCol": 0, "length": 5 },
         { "number": 4, "clue": "Mamífero diúrno plantígrado de cauda longa que pode ser encontrado na floresta do Amazonas.", "startRow": 3, "startCol": 0, "length": 5 },
