@@ -1,1 +1,416 @@
-Somehow, Someday, Somewhere
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Somehow, Someday, Somewhere</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #03050a;
+    overflow: hidden;
+  }
+  canvas { display: block; width: 100vw; height: 100vh; }
+  .hud {
+    position: fixed;
+    left: 18px;
+    bottom: 16px;
+    font: 11px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #2f5f6b;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hud b { color: #6ef0d2; font-weight: 600; }
+  .hud span { color: #235059; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">Somehow <span>//</span> Someday <span>//</span> Somewhere</div>
+<script>
+(function () {
+  'use strict';
+
+  var canvas = document.getElementById('c');
+  var ctx = canvas.getContext('2d', { alpha: false });
+
+  /* ------------------------------------------------------------- camera */
+  var camY = 320;        // eye height above the ground plane
+  var camZ = -950;       // eye position along z (ground extends toward +z)
+  var NEAR = 130;        // near clip distance
+  var FOV = 60 * Math.PI / 180;
+
+  var W = 0, H = 0, DPR = 1, cx = 0, cy = 0, FOCAL = 700;
+  var bgGrad = null, horizonGrad = null;
+
+  var P = { x: 0, y: 0, d: 0 };
+  function project(x, y, z) {
+    var d = z - camZ;
+    if (d < 1) d = 1;
+    var s = FOCAL / d;
+    P.x = cx + x * s;
+    P.y = cy - (y - camY) * s;
+    P.d = d;
+    return P;
+  }
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = Math.round(W * DPR);
+    canvas.height = Math.round(H * DPR);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+    cx = W * 0.5;
+    cy = H * 0.46;
+    FOCAL = (H * 0.5) / Math.tan(FOV / 2);
+
+    bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.85);
+    bgGrad.addColorStop(0, '#0b1a24');
+    bgGrad.addColorStop(0.5, '#060b12');
+    bgGrad.addColorStop(1, '#03050a');
+
+    horizonGrad = ctx.createLinearGradient(0, cy, W, cy);
+    horizonGrad.addColorStop(0, 'rgba(70,220,200,0)');
+    horizonGrad.addColorStop(0.5, 'rgba(80,240,215,0.30)');
+    horizonGrad.addColorStop(1, 'rgba(70,220,200,0)');
+  }
+  window.addEventListener('resize', resize);
+
+  /* -------------------------------------------------------------- ground */
+  var SP = 300;                 // grid spacing
+  var XEXT = 2400;              // half width of the grid
+  var ZFAR = 7400;              // where the grid dissolves into darkness
+  var ZSTART = camZ + NEAR;
+  var NZ = Math.ceil((ZFAR - ZSTART) / SP) + 1;
+  var NX = Math.round(XEXT / SP);
+  var SEGS = 18;                // depth subdivisions per receding line
+  var GROUND_SPEED = 300;       // world units / second, travelling away
+  var scroll = 0;
+
+  function depthFade(d) {
+    if (d < 2400) return 1;
+    var f = 1 - (d - 2400) / 4200;
+    if (f < 0) f = 0;
+    return f * f;
+  }
+
+  function drawGround() {
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'butt';
+
+    /* lines running away from the camera (they fan out to the vanishing point) */
+    ctx.strokeStyle = 'rgb(46,170,158)';
+    for (var i = -NX; i <= NX; i++) {
+      var gx = i * SP;
+      var zPrev = ZSTART;
+      var p = project(gx, 0, zPrev);
+      var x0 = p.x, y0 = p.y;
+      for (var s = 1; s <= SEGS; s++) {
+        var z = ZSTART + (ZFAR - ZSTART) * (s / SEGS);
+        p = project(gx, 0, z);
+        var a = depthFade((zPrev + z) * 0.5 - camZ) * 0.55;
+        if (a > 0.012) {
+          ctx.globalAlpha = a;
+          ctx.beginPath();
+          ctx.moveTo(x0, y0);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        }
+        x0 = p.x; y0 = p.y;
+        zPrev = z;
+      }
+    }
+
+    /* lines running left to right, marching toward the back */
+    for (var k = -1; k <= NZ; k++) {
+      var zz = ZSTART + k * SP + scroll;
+      var d = zz - camZ;
+      if (d < NEAR) continue;
+      var fade = depthFade(d);
+      if (fade <= 0.012) continue;
+      p = project(-XEXT, 0, zz);
+      var ax = p.x, ay = p.y;
+      p = project(XEXT, 0, zz);
+      ctx.globalAlpha = fade;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* --------------------------------------------------------------- sphere */
+  var RINGS = [], MERIDIANS = [];
+  (function buildSphere() {
+    var lats = [-60, -30, 0, 30, 60], k, i;
+    for (k = 0; k < lats.length; k++) {
+      var lat = lats[k] * Math.PI / 180;
+      var yy = Math.sin(lat), rr = Math.cos(lat), pts = [], N = 40;
+      for (i = 0; i <= N; i++) {
+        var a = i / N * Math.PI * 2;      // i == N wraps back onto the start point
+        pts.push([Math.cos(a) * rr, yy, Math.sin(a) * rr]);
+      }
+      RINGS.push(pts);
+    }
+    var NM = 9;
+    for (k = 0; k < NM; k++) {
+      var ang = k / NM * Math.PI, ca = Math.cos(ang), sa = Math.sin(ang);
+      var mp = [], M = 30;
+      for (i = 0; i <= M; i++) {
+        var t = i / M * Math.PI * 2, r2 = Math.cos(t);
+        mp.push([r2 * ca, Math.sin(t), r2 * sa]);
+      }
+      MERIDIANS.push(mp);
+    }
+  })();
+
+  /* ------------------------------------------------------------ ball state */
+  var GRAV = 2400;
+  var RAD = 150;
+  var XBOUND = 1500, ZMIN = 620, ZMAX = 1600;
+  var CONTACT = 0.1;      // seconds the ball stays planted, squashing into the floor
+  var RECOVER = 0.4;      // seconds for the squash to spring back out
+
+  var ball = {
+    x: 0, y: 1000, z: 950,
+    vx: 0, vy: 0, vz: 0,
+    ry: 1000, rollX: 0, rollZ: 0,
+    sq: 1
+  };
+  var grounded = false, contactT = 0, launchV = 0, sqT = 99;
+  var rings = [];
+
+  function reset(dropHeight) {
+    ball.x = (Math.random() * 2 - 1) * 350;
+    ball.z = 950 + (Math.random() * 2 - 1) * 140;
+    ball.y = dropHeight == null ? 1050 : dropHeight;
+    ball.vx = (Math.random() * 2 - 1) * 220;
+    ball.vz = (Math.random() * 2 - 1) * 60;
+    ball.vy = 0;
+    ball.ry = ball.y;
+    ball.sq = 1;
+    ball.rollX = 0; ball.rollZ = 0;
+    grounded = false;
+    contactT = 0;
+    sqT = 99;
+    rings.length = 0;
+  }
+
+  function update(dt) {
+    if (grounded) {
+      /* planted: compressing against the floor before springing away */
+      contactT += dt;
+      ball.vy = 0;
+      var u = Math.min(contactT / CONTACT, 1);
+      var e = 1 - (1 - u) * (1 - u);          // ease out
+      ball.sq = 1 - 0.5 * e;
+      ball.y = RAD * ball.sq;                 // centre drops as the ball flattens onto the floor
+      if (contactT >= CONTACT) {
+        grounded = false;
+        sqT = 0;
+        ball.vy = launchV;
+      }
+    } else {
+      ball.vy -= GRAV * dt;
+      ball.y += ball.vy * dt;
+
+      /* touchdown */
+      if (ball.y <= RAD && ball.vy < 0) {
+        ball.y = RAD;
+        grounded = true;
+        contactT = 0;
+        launchV = Math.sqrt(2 * GRAV * (470 + Math.random() * 330));
+        ball.vx = (Math.random() * 2 - 1) * 470;
+        ball.vz = (Math.random() * 2 - 1) * 70;
+        rings.push({ x: ball.x, z: ball.z, t: 0 });
+      }
+
+      /* squash springs back once the ball has been launched */
+      if (sqT < RECOVER) {
+        sqT += dt;
+        var q = Math.min(sqT / RECOVER, 1);
+        ball.sq = 1 - 0.5 * Math.exp(-4.6 * q) * Math.cos(q * Math.PI * 2.2);
+      } else {
+        ball.sq = 1;
+      }
+    }
+
+    ball.x += ball.vx * dt;
+    ball.z += ball.vz * dt;
+
+    /* gentle air drag so sideways kicks settle a little */
+    var damp = Math.exp(-0.35 * dt);
+    ball.vx *= damp;
+    ball.vz *= damp;
+
+    /* keep it on stage */
+    if (ball.x > XBOUND) { ball.x = XBOUND; ball.vx = -Math.abs(ball.vx) * 0.85; }
+    if (ball.x < -XBOUND) { ball.x = -XBOUND; ball.vx = Math.abs(ball.vx) * 0.85; }
+    if (ball.z > ZMAX) { ball.z = ZMAX; ball.vz = -Math.abs(ball.vz) * 0.7; }
+    if (ball.z < ZMIN) { ball.z = ZMIN; ball.vz = Math.abs(ball.vz) * 0.7; }
+
+    /* never let the squashed ball sink through the floor */
+    ball.ry = Math.max(ball.y, RAD * ball.sq);
+
+    /* rolling */
+    ball.rollZ -= ball.vx * dt / RAD;
+    ball.rollX += ball.vz * dt / RAD;
+
+    /* ripples */
+    for (var i = rings.length - 1; i >= 0; i--) {
+      rings[i].t += dt;
+      if (rings[i].t > 0.9) rings.splice(i, 1);
+    }
+  }
+
+  /* ------------------------------------------------------------- drawing */
+  function groundCircle(path, gx, gz, rad, seg) {
+    var started = false;
+    for (var i = 0; i <= seg; i++) {
+      var a = i / seg * Math.PI * 2;
+      var p = project(gx + Math.cos(a) * rad, 0, gz + Math.sin(a) * rad);
+      if (p.d < NEAR) { started = false; continue; }
+      if (!started) { path.moveTo(p.x, p.y); started = true; }
+      else path.lineTo(p.x, p.y);
+    }
+  }
+
+  function addLoop(path, pts, rot) {
+    var started = false;
+    for (var i = 0; i < pts.length; i++) {
+      var q = pts[i];
+      var ly = q[1] * rot.ca - q[2] * rot.sa;
+      var lz = q[1] * rot.sa + q[2] * rot.ca;
+      var lx = q[0] * rot.cb - ly * rot.sb;
+      var ly2 = q[0] * rot.sb + ly * rot.cb;
+      var p = project(
+        ball.x + lx * RAD * rot.wide,
+        ball.ry + ly2 * RAD * rot.sq,
+        ball.z + lz * RAD * rot.wide
+      );
+      if (p.d < NEAR) { started = false; continue; }
+      if (!started) { path.moveTo(p.x, p.y); started = true; }
+      else path.lineTo(p.x, p.y);
+    }
+  }
+
+  function drawRipples() {
+    for (var i = 0; i < rings.length; i++) {
+      var r = rings[i];
+      var t = r.t / 0.9;
+      var e = 1 - Math.pow(1 - t, 2);
+      var rad = RAD * 0.7 + 900 * e;
+      var a = 0.55 * Math.pow(1 - t, 1.6);
+      if (a < 0.01) continue;
+      var path = new Path2D();
+      groundCircle(path, r.x, r.z, rad, 40);
+      ctx.globalAlpha = a;
+      ctx.strokeStyle = '#59f0c8';
+      ctx.lineWidth = 1.4;
+      ctx.stroke(path);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawShadow() {
+    var h = ball.y - RAD;
+    if (h < 0) h = 0;
+    var k = 1 - Math.min(h / 950, 1);
+    var rad = RAD * (0.55 + 0.45 * k);
+    var a = 0.05 + 0.28 * k * k;
+    var path = new Path2D();
+    groundCircle(path, ball.x, ball.z, rad, 32);
+    ctx.globalAlpha = a;
+    ctx.strokeStyle = '#3fe0c0';
+    ctx.lineWidth = 1.3;
+    ctx.stroke(path);
+    ctx.globalAlpha = a * 0.45;
+    var inner = new Path2D();
+    groundCircle(inner, ball.x, ball.z, rad * 0.45, 24);
+    ctx.stroke(inner);
+    ctx.globalAlpha = 1;
+  }
+
+  function drawBall() {
+    var rot = {
+      ca: Math.cos(ball.rollX), sa: Math.sin(ball.rollX),
+      cb: Math.cos(ball.rollZ), sb: Math.sin(ball.rollZ),
+      sq: ball.sq,
+      wide: 1 / Math.sqrt(ball.sq)
+    };
+    var path = new Path2D(), i;
+    for (i = 0; i < RINGS.length; i++) addLoop(path, RINGS[i], rot);
+    for (i = 0; i < MERIDIANS.length; i++) addLoop(path, MERIDIANS[i], rot);
+
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    ctx.strokeStyle = 'rgba(90,255,220,0.065)';
+    ctx.lineWidth = 10;
+    ctx.stroke(path);
+
+    ctx.strokeStyle = 'rgba(110,255,225,0.20)';
+    ctx.lineWidth = 3.4;
+    ctx.stroke(path);
+
+    ctx.strokeStyle = 'rgba(200,255,244,0.95)';
+    ctx.lineWidth = 1.15;
+    ctx.stroke(path);
+  }
+
+  function render() {
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = horizonGrad;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, cy + 0.5);
+    ctx.lineTo(W, cy + 0.5);
+    ctx.stroke();
+
+    drawGround();
+    drawRipples();
+    drawShadow();
+    drawBall();
+  }
+
+  /* ---------------------------------------------------------------- loop */
+  var last = 0;
+  function frame(now) {
+    if (!last) last = now;
+    var dt = (now - last) / 1000;
+    last = now;
+    if (dt > 0.05) dt = 0.05;
+
+    scroll = (scroll + GROUND_SPEED * dt) % SP;
+    update(dt);
+    render();
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('keydown', function (e) {
+    if (e.code === 'Space' || e.key === ' ') {
+      e.preventDefault();
+      reset(1050);
+    }
+  }, { passive: false });
+  window.addEventListener('blur', function () { last = 0; });
+
+  resize();
+  reset(1050);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
