@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FamilyTree — user manual</title>
+    <meta
+      name="description"
+      content="User manual for FamilyTree 1.1.0: installation, fan chart, person records, relationships, events, photographs and documents, views, GEDCOM, backups and troubleshooting."
+    />
+    <meta name="color-scheme" content="dark" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap">
+        <a class="brand" href="index.html">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22V13M12 13 4 6M12 13l8-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <circle cx="12" cy="13" r="2.4" fill="currentColor" />
+            <circle cx="4" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="20" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.8" />
+          </svg>
+          FamilyTree
+        </a>
+        <nav class="topnav" aria-label="Main">
+          <a href="index.html">Overview</a>
+          <a href="documentation.html" aria-current="page">Documentation</a>
+          <a href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Feedback</a>
+          <span class="lang-switch" aria-label="Language">
+            <span class="current" aria-current="true">EN</span>
+            <a href="pt-PT/documentation.html" hreflang="pt-PT" lang="pt-PT">PT</a>
+          </span>
+          <a class="btn primary" href="FamilyTree_1.1.0_x64_en-US.msi" download>Download</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrap doc-layout">
+      <aside class="doc-toc" aria-label="Contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#what">What FamilyTree is</a></li>
+          <li><a href="#install">Installing and first run</a></li>
+          <li><a href="#window">The window at a glance</a></li>
+          <li><a href="#fan">Moving around the fan chart</a></li>
+          <li><a href="#panel">The person panel</a></li>
+          <li><a href="#people">Creating and editing people</a></li>
+          <li><a href="#relations">Relationships</a></li>
+          <li><a href="#events">Events and dates</a></li>
+          <li><a href="#media">Photographs and documents</a></li>
+          <li><a href="#views">The other views</a></li>
+          <li><a href="#settings">Settings: database and language</a></li>
+          <li><a href="#gedcom">GEDCOM import and export</a></li>
+          <li><a href="#export">Exporting everything</a></li>
+          <li><a href="#backups">Backups and your data</a></li>
+          <li><a href="#shortcuts">Keyboard and mouse</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+          <li><a href="#help">Feedback and help</a></li>
+        </ol>
+      </aside>
+
+      <main class="doc-body">
+        <h1>FamilyTree — user manual</h1>
+        <p class="lead">Version 1.1.0 · Windows 10/11 · written for the person doing the research.</p>
+
+        <h2 id="what">1. What FamilyTree is</h2>
+        <p>
+          FamilyTree is a desktop application for keeping a family tree and reading it. It opens a
+          single SQLite database that lives in <code>Documents\FamilyTree\</code>, draws the people
+          around a central person as a fan chart, and offers a table, two tree layouts, statistics,
+          a timeline and a places list for the same data.
+        </p>
+        <p>Three ideas shape the whole application:</p>
+        <ul>
+          <li><strong>Local and private.</strong> There is no account, no server and no telemetry. The database and the photographs are files on your computer.</li>
+          <li><strong>Editing is first-class.</strong> People, names, relationships, events, places and documents are edited inside the app, not in external tools.</li>
+          <li><strong>Nothing is lost.</strong> Before any destructive action the app writes a full snapshot to <code>backups\</code>, and everything can be exported.</li>
+        </ul>
+
+        <h2 id="install">2. Installing and first run</h2>
+        <ol>
+          <li>Download <code>FamilyTree_1.1.0_x64_en-US.msi</code> from the overview page and run it.</li>
+          <li>
+            The installer is not code-signed, so Windows SmartScreen may ask for confirmation:
+            choose <em>More info → Run anyway</em>.
+          </li>
+          <li>Start <strong>FamilyTree</strong> from the Start menu.</li>
+        </ol>
+        <p>
+          On first run the app creates the data folder and an empty database:
+        </p>
+        <ul>
+          <li><code>%USERPROFILE%\Documents\FamilyTree\familytree.db</code> — the database</li>
+          <li><code>familytree.db-wal</code>, <code>familytree.db-shm</code> — SQLite write-ahead log</li>
+          <li><code>media\</code> — photographs and documents</li>
+          <li><code>backups\</code> — automatic snapshots</li>
+        </ul>
+        <div class="note">
+          <strong>First time?</strong> You can start from nothing (press <em>New person</em>) or
+          import an existing GEDCOM file — see <a href="#gedcom">GEDCOM import and export</a>.
+        </div>
+
+        <h2 id="window">3. The window at a glance</h2>
+        <figure class="doc-figure">
+          <img src="img/fan.png" width="1200" height="800" alt="The main window: controls on the left, fan chart in the middle, person panel on the right" />
+          <figcaption>Left: controls. Centre: the fan chart. Right: the person panel. Bottom-left: settings.</figcaption>
+        </figure>
+        <ul>
+          <li>
+            <strong>Controls (left)</strong> — central person search, number of generations, fan
+            opening angle, rotation, sector spacing, zoom, the <em>View</em> selector, colouring
+            mode, checkboxes for dates/places/gaps/abbreviated names, and the buttons
+            <em>Recentre</em>, <em>Save PNG</em> and <em>New person</em>.
+          </li>
+          <li>
+            <strong>Chart (centre)</strong> — the fan chart, the table, the trees or one of the
+            full views. The status line at the bottom shows the version and the number of people.
+          </li>
+          <li>
+            <strong>Person panel (right)</strong> — everything known about the selected person.
+            It opens when you click a sector, a row or a person; <kbd>×</kbd> closes it.
+          </li>
+          <li>
+            <strong>Settings (⚙, bottom-left)</strong> — databases, GEDCOM, exports and language.
+          </li>
+        </ul>
+
+        <h2 id="fan">4. Moving around the fan chart</h2>
+        <p>
+          The fan chart shows the ancestors of the central person: each ring is one generation. The
+          centre is the person, the inner ring the parents, then grandparents, and so on.
+        </p>
+        <ul>
+          <li><strong>Zoom</strong> — mouse wheel, or the <em>Zoom</em> slider. The percentage is shown next to it.</li>
+          <li><strong>Pan</strong> — drag with the left mouse button.</li>
+          <li><strong>Open a person</strong> — click a sector; the person panel opens and the fan re-centres on them.</li>
+          <li><strong>Search</strong> — type in <em>Central person</em> and pick a result; the fan re-centres.</li>
+          <li><strong>Appearance</strong> — <em>Generations</em> (1–8 rings), <em>Fan opening</em> (60–360°), <em>Rotation</em>, <em>Sector gap</em>, colouring by surname or birth place, and the four display checkboxes.</li>
+          <li><strong>Save PNG</strong> — writes the current chart as an image.</li>
+        </ul>
+        <div class="note">
+          The fan chart is a picture of <em>ancestors</em>. Descendants are shown in the
+          <a href="#views">descendants view</a>.
+        </div>
+
+        <h2 id="panel">5. The person panel</h2>
+        <p>
+          The panel is the record view. From top to bottom: the name and years, quick actions, the
+          details, the relatives, the events, the photographs and documents, the places and the
+          notes.
+        </p>
+        <ul>
+          <li><strong>Centre here</strong> — makes the person the centre of the chart.</li>
+          <li><strong>Edit</strong> — opens the editor for names, sex, living status and notes.</li>
+          <li><strong>Parents, Spouses, Siblings, Children</strong> — click a name to open that person, <kbd>×</kbd> to remove the relationship.</li>
+          <li><strong>Events</strong> — every event with date and place; the document icon marks events that have a record attached.</li>
+          <li><strong>Photographs / Documents</strong> — see the <a href="#media">media section</a>.</li>
+          <li><strong>Warnings</strong> — non-blocking checks such as a death before birth or a parent younger than 13.</li>
+          <li><strong>Possible duplicates</strong> — similar names and dates; clicking one merges the other person into this one, and the app offers to undo.</li>
+        </ul>
+
+        <h2 id="people">6. Creating and editing people</h2>
+        <ul>
+          <li><strong>New person</strong> (controls, bottom-left of the button row) — creates a person with no relationships; you can link them afterwards.</li>
+          <li><strong>Edit</strong> (panel) — changes the name, sex, living status and notes.</li>
+          <li><strong>Delete</strong> (inside the editor) — only allowed when the person has no relationships; the app explains what to remove first.</li>
+        </ul>
+        <p>
+          Names are stored whole and also split into given name and surname, which is what the
+          surname colours and the table filters use. The full name is always what you see in the
+          chart and the panel.
+        </p>
+
+        <h2 id="relations">7. Relationships</h2>
+        <p>
+          Use the buttons under the quick actions: <em>Add parent</em>, <em>Add child</em>,
+          <em>Add spouse</em>. Each opens the person picker:
+        </p>
+        <ol>
+          <li>Search for the person — or press <em>Create new person</em> and fill the form; the new person is linked straight away, without a second search.</li>
+          <li>Relationships are validated: the app refuses a link that would create a cycle or a third parent.</li>
+        </ol>
+        <p>
+          Siblings are derived, not stored: two people are siblings when they share at least one
+          parent, which includes half-brothers and half-sisters. Families that describe the same
+          couple are merged automatically so siblings always appear.
+        </p>
+
+        <h2 id="events">8. Events and dates</h2>
+        <p>
+          Each event has a type, a genealogical date, a place, an optional description and notes.
+          Types: birth, baptism, death, burial, marriage, residence, occupation and other.
+        </p>
+        <h3>Date syntax</h3>
+        <table class="keys">
+          <thead>
+            <tr><th>You type</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>1880</code></td><td>exact year</td></tr>
+            <tr><td><code>1880-05</code> / <code>1880-05-12</code></td><td>exact month or day</td></tr>
+            <tr><td><code>c. 1880</code></td><td>about</td></tr>
+            <tr><td><code>antes de 1900</code> / <code>before 1900</code></td><td>before</td></tr>
+            <tr><td><code>depois de 1850</code> / <code>after 1850</code></td><td>after</td></tr>
+            <tr><td><code>entre 1880 e 1890</code> / <code>between 1880 and 1890</code></td><td>between</td></tr>
+            <tr><td><code>n.a.</code> or empty</td><td>unknown</td></tr>
+          </tbody>
+        </table>
+        <p>
+          Places are shared: typing a place that already exists reuses it, so the places list and
+          the fan chart colours stay consistent.
+        </p>
+
+        <h2 id="media">9. Photographs and documents</h2>
+        <p>
+          The panel has two sections, <em>Photographs</em> and <em>Documents</em>. Both hold image
+          files copied into the <code>media\</code> folder next to the database.
+        </p>
+        <ul>
+          <li><strong>Add</strong> — <em>Add photograph…</em> or <em>Add document…</em> opens the file dialog; you can select several files. Files are copied with their original name (<code>-2</code>, <code>-3</code> on collision).</li>
+          <li><strong>Open</strong> — click an entry to open the full-screen viewer: wheel to zoom at the cursor, drag to pan, <em>Fit</em>, <em>100%</em>, <em>Rotate</em>, brightness and contrast sliders (screen only — the file is never modified). <kbd>Esc</kbd> closes it.</li>
+          <li><strong>Edit</strong> — the pencil changes the type (photograph or document), the title, the caption, the archive reference (for example <code>LMG14-001-0001_m0074</code>) and the event the record proves.</li>
+          <li><strong>Several people</strong> — <em>Link person…</em> associates the same record with another person (a marriage certificate serves both spouses) and <kbd>×</kbd> removes that link. A record always keeps at least one person or an event.</li>
+          <li><strong>Events</strong> — a document linked to an event also appears inside that event's editor, and the event row in the panel shows a document icon.</li>
+        </ul>
+        <div class="note warn">
+          <strong>Formats.</strong> Only images the viewer can show are accepted: JPG, PNG and WebP.
+          TIFF and PDF files are not supported — convert them before adding.
+        </div>
+        <div class="note">
+          <strong>Duplicates.</strong> Each file is identified by its SHA-256 hash: adding the same
+          scan twice does not create a second copy, it just links the existing record.
+        </div>
+
+        <h2 id="views">10. The other views</h2>
+        <p>Everything is an option of the <em>View</em> selector; closing a view returns to the fan chart.</p>
+        <ul>
+          <li><strong>Table</strong> — the person list with filters (name, surname, sex, living/deceased, birth place) and sortable columns; a click opens the person.</li>
+          <li><strong>Pedigree</strong> — ancestors to the right, 2–6 generations, drawn as plain SVG with zoom, pan and click-to-recentre.</li>
+          <li><strong>Descendants</strong> — one row per generation, 3, 5, 8, 13, 21 or 34 generations; siblings stay side by side even when one has a long line.</li>
+          <li><strong>Statistics</strong> — totals, oldest/newest, average age at death, endogamy (siblings and 1st–4th cousins), surnames, births and deaths per decade, birth places and data gaps.</li>
+          <li><strong>Timeline</strong> — every dated event by decade or by year, stacked by type.</li>
+          <li><strong>Places</strong> — events and people grouped by place, filterable and sortable.</li>
+        </ul>
+        <figure class="doc-figure">
+          <img src="img/estatisticas.png" width="1200" height="800" alt="Statistics view with the endogamy panel first" />
+          <figcaption>The statistics view packs its panels in columns; the endogamy panel comes first.</figcaption>
+        </figure>
+
+        <h2 id="settings">11. Settings: database and language</h2>
+        <p>The gear at the bottom-left corner opens the settings window.</p>
+        <ul>
+          <li><strong>Base de dados / Database</strong> — the file in use, the recent list, <em>Abrir…</em> to open an existing database, <em>Novo…</em> to create an empty one. Switching reloads the tree, panel and counts without restarting; the last database reopens next time.</li>
+          <li><strong>Idioma / Language</strong> — Portuguese or English. The whole interface is retranslated immediately, including the window title; the choice is remembered.</li>
+          <li><strong>Exportar GEDCOM… / Importar GEDCOM…</strong> and <strong>Exportar tudo…</strong> — see below.</li>
+          <li><strong>Abrir pasta de dados</strong> — opens the data folder (useful to reach <code>backups\</code> or <code>media\</code>).</li>
+        </ul>
+
+        <h2 id="gedcom">12. GEDCOM import and export</h2>
+        <h3>Export</h3>
+        <p>
+          <em>Exportar GEDCOM…</em> writes the open database as a standard GEDCOM 5.5.1 file
+          (people, families, names, events, dates and places), suggested with the database file
+          name.
+        </p>
+        <h3>Import</h3>
+        <p>
+          <em>Importar GEDCOM…</em> asks where to put the data: into the open database or into a
+          new file created on the spot. People who already exist (same name and birth year) are
+          skipped and the imported families are pointed at the person already in the database, so
+          importing the same file twice changes nothing. At the end a summary reports how many
+          people, families, events and places were added, and any warnings.
+        </p>
+        <div class="note">
+          When the database still has no central person, the <strong>first person in the file</strong>
+          becomes the root — usually the one the source program lists first. Importing into a
+          database in use does not change the current centre.
+        </div>
+
+        <h2 id="export">13. Exporting everything</h2>
+        <p>
+          <em>Exportar tudo…</em> writes a single <code>.zip</code> with:
+        </p>
+        <ul>
+          <li><code>dados.json</code> — every table of the database, in readable JSON;</li>
+          <li><code>arvore.ged</code> — the same data as GEDCOM 5.5.1;</li>
+          <li><code>media\</code> — every photograph and document file.</li>
+        </ul>
+        <p>This is the recommended archive for a finished piece of research, and the easiest way to move a tree to another computer.</p>
+
+        <h2 id="backups">14. Backups and your data</h2>
+        <ul>
+          <li>Before any destructive action the app writes a full copy to <code>backups\familytree-AAAAMMDD-HHMMSS.db</code> and keeps the last 10. There is no restore screen: copy a snapshot back over <code>familytree.db</code> with the app closed.</li>
+          <li>The snapshots cover the database only. <strong>The unit to back up is the whole folder</strong> — <code>familytree.db</code> plus <code>media\</code> — or the zip from <em>Exportar tudo…</em>.</li>
+          <li>Do not keep a live database inside OneDrive, Google Drive or Dropbox: synchronising a database while it is open can corrupt it. Work locally and let the synced folder hold the exported zips.</li>
+        </ul>
+
+        <h2 id="shortcuts">15. Keyboard and mouse</h2>
+        <table class="keys">
+          <thead>
+            <tr><th>Where</th><th>Action</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Fan chart</td><td>Wheel</td><td>Zoom</td></tr>
+            <tr><td>Fan chart</td><td>Drag</td><td>Pan</td></tr>
+            <tr><td>Fan chart</td><td><kbd>Enter</kbd> on a focused sector</td><td>Open the person</td></tr>
+            <tr><td>Trees</td><td>Wheel / drag / click</td><td>Zoom, pan, re-centre</td></tr>
+            <tr><td>Image viewer</td><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Zoom in / out</td></tr>
+            <tr><td>Image viewer</td><td><kbd>0</kbd> / <kbd>1</kbd></td><td>Fit / 100%</td></tr>
+            <tr><td>Image viewer</td><td><kbd>R</kbd></td><td>Rotate 90°</td></tr>
+            <tr><td>Any modal</td><td><kbd>Esc</kbd></td><td>Close the dialog or the view</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="troubleshooting">16. Troubleshooting</h2>
+        <h3>"Database schema incompatible"</h3>
+        <p>
+          The file was written by a newer version of the app. Update FamilyTree, or open a copy
+          with the version that created it.
+        </p>
+        <h3>A photograph shows a broken icon</h3>
+        <p>
+          The record exists but the file is missing from <code>media\</code>. Put the file back
+          with the same name, or add the image again (the hash keeps the same record).
+        </p>
+        <h3>The app feels slow on a big database</h3>
+        <p>
+          Opening a view reads the whole database once. Keep the database outside synced folders
+          and avoid opening it twice; the table is paginated and the views show "loading" only when
+          a query takes longer than 300 ms.
+        </p>
+        <h3>I deleted a person by mistake</h3>
+        <p>
+          Close the app and copy the most recent file from <code>backups\</code> over
+          <code>familytree.db</code>. You lose the changes made after that snapshot.
+        </p>
+        <h3>SmartScreen or antivirus warnings</h3>
+        <p>
+          The installer is not signed yet; choose <em>More info → Run anyway</em>. If your
+          organisation blocks unsigned installers, ask your administrator for an exception.
+        </p>
+
+        <h2 id="help">17. Feedback and help</h2>
+        <p>
+          Suggestions, bugs and missing features are welcome — please use the feedback form. When
+          reporting a problem, mention the version, what you were doing, and whether the database
+          came from a GEDCOM import.
+        </p>
+        <p>
+          <a class="btn primary" href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Send feedback</a>
+          <a class="btn ghost" href="FamilyTree_1.1.0_x64_en-US.msi" download>Download FamilyTree 1.1.0</a>
+        </p>
+
+        <nav class="doc-nav" aria-label="Page navigation">
+          <a href="index.html">← Back to the overview</a>
+          <a href="pt-PT/documentation.html" hreflang="pt-PT" lang="pt-PT">Ler em português →</a>
+        </nav>
+      </main>
+    </div>
+
+    <footer class="site">
+      <div class="wrap">
+        <span>FamilyTree v1.1.0 · 27 November 2026</span>
+        <span>
+          <a href="index.html">Overview</a> ·
+          <a href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Feedback</a> ·
+          <a href="pt-PT/documentation.html" hreflang="pt-PT" lang="pt-PT">Português</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

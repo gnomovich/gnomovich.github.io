@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FamilyTree — your family history, drawn as it grows</title>
+    <meta
+      name="description"
+      content="FamilyTree is an offline family-tree application for Windows: an interactive fan chart, readable pedigree and descendant trees, statistics, photographs and archive documents — all in a folder you own."
+    />
+    <meta name="color-scheme" content="dark" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap">
+        <a class="brand" href="index.html">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22V13M12 13 4 6M12 13l8-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <circle cx="12" cy="13" r="2.4" fill="currentColor" />
+            <circle cx="4" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="20" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.8" />
+          </svg>
+          FamilyTree
+        </a>
+        <nav class="topnav" aria-label="Main">
+          <a href="#highlights">Highlights</a>
+          <a href="documentation.html">Documentation</a>
+          <a href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Feedback</a>
+          <span class="lang-switch" aria-label="Language">
+            <span class="current" aria-current="true">EN</span>
+            <a href="pt-PT/index.html" hreflang="pt-PT" lang="pt-PT">PT</a>
+          </span>
+          <a class="btn primary" href="FamilyTree_1.1.0_x64_en-US.msi" download>Download</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <span class="eyebrow">Windows 10/11 · v1.1.0 · works offline</span>
+            <h1>Your family history, drawn as it grows.</h1>
+            <p class="lead">
+              FamilyTree turns a genealogical database into an interactive fan chart, readable
+              trees and honest statistics — and keeps the photographs and archive records next to
+              the people they belong to. No account, no subscription: everything stays in a folder
+              you own.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="FamilyTree_1.1.0_x64_en-US.msi" download>
+                Download for Windows <small>.msi · 5.5 MB</small>
+              </a>
+              <a class="btn ghost" href="documentation.html">Read the manual</a>
+            </div>
+          </div>
+          <figure class="shot">
+            <img
+              src="img/fan.png"
+              width="1200"
+              height="800"
+              alt="FamilyTree showing the fan chart of Elizabeth II with her profile panel open on the right"
+            />
+            <figcaption>
+              Fan chart centred on Elizabeth II — screenshots in this page come from a
+              4,671-person database with six generations of ancestry.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="highlights">
+        <div class="wrap">
+          <div class="section-head">
+            <h2>Four things that make it different</h2>
+            <p>
+              Built for people who actually research their family, not for a social network.
+              Every view is one keystroke away from the others.
+            </p>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <img src="img/tabela.png" width="1200" height="800" alt="Table view with filters for name, surname, sex, living status and birth place" />
+              <div class="card-body">
+                <h3>Find anyone in seconds</h3>
+                <p>
+                  The table view filters by name, surname, sex, living or deceased, and birth
+                  place, with sortable columns for name, birth and death. A click opens the person
+                  in the fan chart.
+                </p>
+                <ul>
+                  <li>Half a million rows stay responsive — paginated and indexed.</li>
+                  <li>Surnames come from a palette so the chart colours stay consistent.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <img src="img/estatisticas.png" width="1200" height="800" alt="Statistics view with totals, an endogamy panel, surnames, births and deaths per decade" />
+              <div class="card-body">
+                <h3>Statistics that reveal patterns</h3>
+                <p>
+                  Totals, oldest and newest person, average age at death, surnames, births and
+                  deaths per decade, birth places and data gaps — plus an <strong>endogamy</strong>
+                  panel counting marriages between siblings and first to fourth cousins.
+                </p>
+                <ul>
+                  <li>Panels pack in columns, so nothing is wasted on empty grid cells.</li>
+                  <li>Everything is computed from the open database in one read.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <img src="img/arvore.png" width="1200" height="800" alt="Pedigree view of Elizabeth II with four generations of ancestors" />
+              <div class="card-body">
+                <h3>Trees that stay readable</h3>
+                <p>
+                  The pedigree lays ancestors out to the right; the descendants view packs one
+                  generation per row so siblings stay side by side even when one of them has a
+                  long line. Zoom with the wheel, drag to pan, click a box to re-centre.
+                </p>
+                <ul>
+                  <li>Up to 6 generations of ancestors, up to 34 of descendants.</li>
+                  <li>Export any view as a PNG with one click.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card">
+              <img src="img/cronologia.png" width="1200" height="800" alt="Timeline view with births, marriages, deaths and other events stacked per decade" />
+              <div class="card-body">
+                <h3>A timeline of every event</h3>
+                <p>
+                  The whole family by decade or by year, with births, marriages, deaths and other
+                  events stacked in the same bar — the fastest way to spot the centuries your
+                  research is still missing.
+                </p>
+                <ul>
+                  <li>Switch between decades and years without leaving the view.</li>
+                  <li>The places list groups events and people by location.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div class="section-head">
+            <h2>And the parts you only notice later</h2>
+            <p>Small decisions that make long research sessions less painful.</p>
+          </div>
+          <ul class="features">
+            <li>
+              <strong>Photographs and archive documents</strong> — portraits and parish records are
+              copied into the data folder, deduplicated, linked to several people and to the event
+              they prove, and opened in a full-screen viewer with zoom, rotation and
+              brightness/contrast.
+            </li>
+            <li>
+              <strong>GEDCOM in and out</strong> — export a standard 5.5.1 file or import one into
+              the open database or a new one; people you already have are skipped.
+            </li>
+            <li>
+              <strong>Everything in one zip</strong> — "Export all" writes the JSON dump, the
+              GEDCOM and the media folder into a single archive.
+            </li>
+            <li>
+              <strong>Backups before anything dangerous</strong> — every destructive action is
+              preceded by a full database snapshot in the <code>backups</code> folder.
+            </li>
+            <li>
+              <strong>Two languages</strong> — Portuguese and English, switched live from the
+              settings window; the choice is remembered.
+            </li>
+            <li>
+              <strong>A database you can move</strong> — a single SQLite file (plus its media
+              folder) that you can copy, back up or keep in a private repository.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div class="cta">
+            <div>
+              <h2>Try it with your own tree</h2>
+              <p>
+                Version 1.1.0 · unsigned installer (Windows may ask for confirmation) · your data
+                never leaves your computer.
+              </p>
+            </div>
+            <div class="hero-actions">
+              <a class="btn primary" href="FamilyTree_1.1.0_x64_en-US.msi" download>
+                Download .msi <small>5.5 MB</small>
+              </a>
+              <a
+                class="btn ghost"
+                href="https://forms.gle/ADcQSqGmD479ZSzAA"
+                target="_blank"
+                rel="noopener"
+                >Send feedback</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site">
+      <div class="wrap">
+        <span>FamilyTree v1.1.0 · 27 November 2026 · screenshots taken from a 4,671-person database</span>
+        <span>
+          <a href="documentation.html">Documentation</a> ·
+          <a href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Feedback</a> ·
+          <a href="pt-PT/index.html" hreflang="pt-PT" lang="pt-PT">Português</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

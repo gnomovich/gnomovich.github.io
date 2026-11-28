@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FamilyTree — manual do utilizador</title>
+    <meta
+      name="description"
+      content="Manual do utilizador do FamilyTree 1.1.0: instalação, leque, pessoas, relações, eventos, fotografias e documentos, vistas, GEDCOM, cópias de segurança e resolução de problemas."
+    />
+    <meta name="color-scheme" content="dark" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap">
+        <a class="brand" href="../index.html">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22V13M12 13 4 6M12 13l8-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <circle cx="12" cy="13" r="2.4" fill="currentColor" />
+            <circle cx="4" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="20" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.8" />
+          </svg>
+          FamilyTree
+        </a>
+        <nav class="topnav" aria-label="Principal">
+          <a href="../index.html">Apresentação</a>
+          <a href="documentation.html" aria-current="page">Manual</a>
+          <a href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Comentários</a>
+          <span class="lang-switch" aria-label="Idioma">
+            <a href="../documentation.html" hreflang="en" lang="en">EN</a>
+            <span class="current" aria-current="true">PT</span>
+          </span>
+          <a class="btn primary" href="../FamilyTree_1.1.0_x64_en-US.msi" download>Transferir</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrap doc-layout">
+      <aside class="doc-toc" aria-label="Índice">
+        <h2>Índice</h2>
+        <ol>
+          <li><a href="#oque">O que é o FamilyTree</a></li>
+          <li><a href="#instalar">Instalação e primeiro arranque</a></li>
+          <li><a href="#janela">A janela de relance</a></li>
+          <li><a href="#leque">Navegar no leque</a></li>
+          <li><a href="#painel">O painel da pessoa</a></li>
+          <li><a href="#pessoas">Criar e editar pessoas</a></li>
+          <li><a href="#relacoes">Relações</a></li>
+          <li><a href="#eventos">Eventos e datas</a></li>
+          <li><a href="#media">Fotografias e documentos</a></li>
+          <li><a href="#vistas">As outras vistas</a></li>
+          <li><a href="#config">Configurações: base de dados e idioma</a></li>
+          <li><a href="#gedcom">Importar e exportar GEDCOM</a></li>
+          <li><a href="#exportar">Exportar tudo</a></li>
+          <li><a href="#copias">Cópias de segurança e os seus dados</a></li>
+          <li><a href="#atalhos">Teclado e rato</a></li>
+          <li><a href="#problemas">Resolução de problemas</a></li>
+          <li><a href="#ajuda">Comentários e ajuda</a></li>
+        </ol>
+      </aside>
+
+      <main class="doc-body">
+        <h1>FamilyTree — manual do utilizador</h1>
+        <p class="lead">Versão 1.1.0 · Windows 10/11 · escrito para quem faz a investigação.</p>
+
+        <h2 id="oque">1. O que é o FamilyTree</h2>
+        <p>
+          O FamilyTree é uma aplicação de ambiente de trabalho para guardar uma árvore
+          genealógica e para a ler. Abre uma única base SQLite que vive em
+          <code>Documentos\FamilyTree\</code>, desenha as pessoas em volta de uma pessoa central
+          como um leque e oferece uma tabela, duas árvores, estatísticas, uma cronologia e uma
+          lista de locais para os mesmos dados.
+        </p>
+        <p>Três ideias moldam toda a aplicação:</p>
+        <ul>
+          <li><strong>Local e privada.</strong> Não há conta, servidor nem telemetria. A base e as fotografias são ficheiros no seu computador.</li>
+          <li><strong>Editar é de primeira linha.</strong> Pessoas, nomes, relações, eventos, locais e documentos editam-se dentro da aplicação, não em ferramentas externas.</li>
+          <li><strong>Nada se perde.</strong> Antes de qualquer acção destrutiva a aplicação grava um retrato completo em <code>backups\</code>, e tudo pode ser exportado.</li>
+        </ul>
+
+        <h2 id="instalar">2. Instalação e primeiro arranque</h2>
+        <ol>
+          <li>Transfira <code>FamilyTree_1.1.0_x64_en-US.msi</code> da página de apresentação e execute-o.</li>
+          <li>
+            O instalador não está assinado, por isso o SmartScreen do Windows pode pedir
+            confirmação: escolha <em>Mais informações → Executar mesmo assim</em>.
+          </li>
+          <li>Abra o <strong>FamilyTree</strong> pelo menu Iniciar.</li>
+        </ol>
+        <p>No primeiro arranque a aplicação cria a pasta de dados e uma base vazia:</p>
+        <ul>
+          <li><code>%USERPROFILE%\Documentos\FamilyTree\familytree.db</code> — a base de dados</li>
+          <li><code>familytree.db-wal</code>, <code>familytree.db-shm</code> — registo de escrita do SQLite</li>
+          <li><code>media\</code> — fotografias e documentos</li>
+          <li><code>backups\</code> — cópias automáticas</li>
+        </ul>
+        <div class="note">
+          <strong>Primeira vez?</strong> Pode começar do zero (botão <em>Nova pessoa</em>) ou
+          importar um ficheiro GEDCOM — ver <a href="#gedcom">Importar e exportar GEDCOM</a>.
+        </div>
+
+        <h2 id="janela">3. A janela de relance</h2>
+        <figure class="doc-figure">
+          <img src="img/fan.png" width="1200" height="800" alt="A janela principal: controlos à esquerda, leque ao centro, painel da pessoa à direita" />
+          <figcaption>Esquerda: controlos. Centro: o leque. Direita: o painel da pessoa. Canto inferior esquerdo: configurações.</figcaption>
+        </figure>
+        <ul>
+          <li>
+            <strong>Controlos (esquerda)</strong> — procura da pessoa central, número de gerações,
+            abertura do leque, rotação, espaço entre sectores, zoom, o seletor <em>Vista</em>, modo
+            de cor, opções de datas/locais/lacunas/nomes abreviados e os botões
+            <em>Recentrar</em>, <em>Guardar PNG</em> e <em>Nova pessoa</em>.
+          </li>
+          <li>
+            <strong>Gráfico (centro)</strong> — o leque, a tabela, as árvores ou uma das vistas. A
+            linha de estado no fundo mostra a versão e o número de pessoas.
+          </li>
+          <li>
+            <strong>Painel da pessoa (direita)</strong> — tudo o que se sabe da pessoa escolhida.
+            Abre ao clicar num sector, numa linha ou numa pessoa; <kbd>×</kbd> fecha.
+          </li>
+          <li>
+            <strong>Configurações (⚙, canto inferior esquerdo)</strong> — bases de dados, GEDCOM,
+            exportações e idioma.
+          </li>
+        </ul>
+
+        <h2 id="leque">4. Navegar no leque</h2>
+        <p>
+          O leque mostra os ascendentes da pessoa central: cada anel é uma geração. No centro está
+          a pessoa, no anel interior os pais, depois os avós, e assim por diante.
+        </p>
+        <ul>
+          <li><strong>Zoom</strong> — roda do rato ou o cursor <em>Zoom</em>. A percentagem aparece ao lado.</li>
+          <li><strong>Mover</strong> — arrastar com o botão esquerdo.</li>
+          <li><strong>Abrir uma pessoa</strong> — clicar num sector; o painel abre e o leque recentra-se nela.</li>
+          <li><strong>Procurar</strong> — escrever em <em>Pessoa central</em> e escolher um resultado; o leque recentra-se.</li>
+          <li><strong>Aparência</strong> — <em>Gerações</em> (1–8 anéis), <em>Abertura do leque</em> (60–360°), <em>Rotação</em>, <em>Espaço entre sectores</em>, cor por apelido ou local de nascimento e as quatro opções de visualização.</li>
+          <li><strong>Guardar PNG</strong> — grava o leque atual como imagem.</li>
+        </ul>
+        <div class="note">
+          O leque é um retrato dos <em>ascendentes</em>. Os descendentes estão na
+          <a href="#vistas">vista de descendentes</a>.
+        </div>
+
+        <h2 id="painel">5. O painel da pessoa</h2>
+        <p>
+          O painel é a vista do registo. De cima para baixo: nome e anos, acções rápidas, dados,
+          parentes, eventos, fotografias e documentos, locais e notas.
+        </p>
+        <ul>
+          <li><strong>Centrar aqui</strong> — torna a pessoa o centro do gráfico.</li>
+          <li><strong>Editar</strong> — abre o editor de nomes, sexo, estado (vivo/falecido) e notas.</li>
+          <li><strong>Pais, Cônjuges, Irmãos, Filhos</strong> — clicar num nome abre essa pessoa, <kbd>×</kbd> remove a relação.</li>
+          <li><strong>Eventos</strong> — cada evento com data e local; o ícone de documento marca os eventos que têm um registo associado.</li>
+          <li><strong>Fotografias / Documentos</strong> — ver a <a href="#media">secção de media</a>.</li>
+          <li><strong>Avisos</strong> — verificações não bloqueantes, como óbito antes do nascimento ou um progenitor com menos de 13 anos.</li>
+          <li><strong>Possíveis duplicados</strong> — nomes e datas parecidos; clicar num deles funde a outra pessoa nesta, e a aplicação propõe desfazer.</li>
+        </ul>
+
+        <h2 id="pessoas">6. Criar e editar pessoas</h2>
+        <ul>
+          <li><strong>Nova pessoa</strong> (controlos, no fundo da fila de botões) — cria uma pessoa sem relações; pode ligá-la depois.</li>
+          <li><strong>Editar</strong> (painel) — altera nome, sexo, estado e notas.</li>
+          <li><strong>Eliminar</strong> (dentro do editor) — só é permitido quando a pessoa não tem relações; a aplicação explica o que remover primeiro.</li>
+        </ul>
+        <p>
+          Os nomes são guardados completos e também separados em nome próprio e apelido, que é o
+          que as cores por apelido e os filtros da tabela usam. O nome completo é sempre o que
+          aparece no leque e no painel.
+        </p>
+
+        <h2 id="relacoes">7. Relações</h2>
+        <p>
+          Use os botões das acções rápidas: <em>Adicionar pai/mãe</em>, <em>Adicionar filho</em>,
+          <em>Adicionar cônjuge</em>. Cada um abre o seletor de pessoas:
+        </p>
+        <ol>
+          <li>Procure a pessoa — ou <em>Criar pessoa nova</em> e preencha o formulário; a pessoa nova fica logo ligada, sem segunda procura.</li>
+          <li>As relações são validadas: a aplicação recusa uma ligação que crie um ciclo ou um terceiro progenitor.</li>
+        </ol>
+        <p>
+          Os irmãos são derivados, não guardados: duas pessoas são irmãs quando partilham pelo menos
+          um progenitor, o que inclui meios-irmãos. As famílias que descrevem o mesmo casal são
+          consolidadas automaticamente, para os irmãos aparecerem sempre.
+        </p>
+
+        <h2 id="eventos">8. Eventos e datas</h2>
+        <p>
+          Cada evento tem tipo, data genealógica, local, descrição opcional e notas. Tipos:
+          nascimento, batismo, óbito, sepultura, casamento, residência, profissão e outro.
+        </p>
+        <h3>Sintaxe das datas</h3>
+        <table class="keys">
+          <thead>
+            <tr><th>Escreve</th><th>Significado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>1880</code></td><td>ano exato</td></tr>
+            <tr><td><code>1880-05</code> / <code>1880-05-12</code></td><td>mês ou dia exato</td></tr>
+            <tr><td><code>c. 1880</code></td><td>cerca de</td></tr>
+            <tr><td><code>antes de 1900</code></td><td>antes</td></tr>
+            <tr><td><code>depois de 1850</code></td><td>depois</td></tr>
+            <tr><td><code>entre 1880 e 1890</code></td><td>entre</td></tr>
+            <tr><td><code>n.a.</code> ou vazio</td><td>desconhecido</td></tr>
+          </tbody>
+        </table>
+        <p>
+          Os locais são partilhados: escrever um local que já existe reutiliza-o, para a lista de
+          locais e as cores do leque ficarem coerentes.
+        </p>
+
+        <h2 id="media">9. Fotografias e documentos</h2>
+        <p>
+          O painel tem duas secções, <em>Fotografias</em> e <em>Documentos</em>. Ambas guardam
+          imagens copiadas para a pasta <code>media\</code> ao lado da base.
+        </p>
+        <ul>
+          <li><strong>Adicionar</strong> — <em>Adicionar fotografia…</em> ou <em>Adicionar documento…</em> abre o diálogo de ficheiros; pode escolher vários. Os ficheiros são copiados com o nome original (<code>-2</code>, <code>-3</code> em colisão).</li>
+          <li><strong>Abrir</strong> — clicar num registo abre o visor de ecrã inteiro: roda para ampliar no ponto do cursor, arrastar para mover, <em>Ajustar</em>, <em>100%</em>, <em>Rodar</em> e cursores de brilho e contraste (só no ecrã — o ficheiro nunca é alterado). <kbd>Esc</kbd> fecha.</li>
+          <li><strong>Editar</strong> — o lápis muda o tipo (fotografia ou documento), o título, a legenda, a referência de arquivo (por exemplo <code>LMG14-001-0001_m0074</code>) e o evento que o registo prova.</li>
+          <li><strong>Várias pessoas</strong> — <em>Ligar pessoa…</em> associa o mesmo registo a outra pessoa (um assento de casamento serve os dois cônjuges) e <kbd>×</kbd> remove essa ligação. Um registo mantém sempre pelo menos uma pessoa ou um evento.</li>
+          <li><strong>Eventos</strong> — um documento ligado a um evento aparece também dentro do editor desse evento, e a linha do evento no painel mostra um ícone de documento.</li>
+        </ul>
+        <div class="note warn">
+          <strong>Formatos.</strong> Só são aceites imagens que o visor consegue mostrar: JPG, PNG e
+          WebP. TIFF e PDF não são suportados — converta-os antes de adicionar.
+        </div>
+        <div class="note">
+          <strong>Duplicados.</strong> Cada ficheiro é identificado pelo seu hash SHA-256: adicionar
+          o mesmo scan duas vezes não cria segunda cópia, apenas liga o registo existente.
+        </div>
+
+        <h2 id="vistas">10. As outras vistas</h2>
+        <p>Todas são opções do seletor <em>Vista</em>; fechar uma vista volta ao leque.</p>
+        <ul>
+          <li><strong>Tabela</strong> — a lista de pessoas com filtros (nome, apelido, sexo, vivos/falecidos, local de nascimento) e colunas ordenáveis; um clique abre a pessoa.</li>
+          <li><strong>Pedigree</strong> — ascendentes para a direita, 2–6 gerações, em SVG simples com zoom, arrasto e clique para recentrar.</li>
+          <li><strong>Descendentes</strong> — uma fila por geração, 3, 5, 8, 13, 21 ou 34 gerações; os irmãos ficam lado a lado mesmo quando um tem uma linha comprida.</li>
+          <li><strong>Estatísticas</strong> — totais, mais antiga/mais recente, idade média à morte, endogamia (irmãos e primos do 1.º ao 4.º grau), apelidos, nascimentos e óbitos por década, locais de nascimento e lacunas dos dados.</li>
+          <li><strong>Cronologia</strong> — todos os eventos datados por década ou por ano, empilhados por tipo.</li>
+          <li><strong>Locais</strong> — eventos e pessoas agrupados por local, com filtro e ordenação.</li>
+        </ul>
+        <figure class="doc-figure">
+          <img src="img/estatisticas.png" width="1200" height="800" alt="Vista de estatísticas com o painel de endogamia primeiro" />
+          <figcaption>A vista de estatísticas organiza os painéis em colunas; o de endogamia vem primeiro.</figcaption>
+        </figure>
+
+        <h2 id="config">11. Configurações: base de dados e idioma</h2>
+        <p>A roda dentada no canto inferior esquerdo abre a janela de configurações.</p>
+        <ul>
+          <li><strong>Base de dados</strong> — o ficheiro em uso, a lista de recentes, <em>Abrir…</em> para abrir uma base existente e <em>Novo…</em> para criar uma vazia. Mudar recarrega árvore, painel e contagens sem reiniciar; a última base reabre no arranque seguinte.</li>
+          <li><strong>Idioma</strong> — português ou inglês. Toda a interface é retraduzida de imediato, incluindo o título da janela; a escolha é guardada.</li>
+          <li><strong>Exportar GEDCOM… / Importar GEDCOM…</strong> e <strong>Exportar tudo…</strong> — ver abaixo.</li>
+          <li><strong>Abrir pasta de dados</strong> — abre a pasta de dados (útil para chegar a <code>backups\</code> ou <code>media\</code>).</li>
+        </ul>
+
+        <h2 id="gedcom">12. Importar e exportar GEDCOM</h2>
+        <h3>Exportar</h3>
+        <p>
+          <em>Exportar GEDCOM…</em> grava a base aberta como ficheiro GEDCOM 5.5.1 (pessoas,
+          famílias, nomes, eventos, datas e locais), sugerindo o nome do ficheiro da base.
+        </p>
+        <h3>Importar</h3>
+        <p>
+          <em>Importar GEDCOM…</em> pergunta onde pôr os dados: na base aberta ou num ficheiro novo
+          criado na hora. Quem já existe (mesmo nome e ano de nascimento) é ignorado e as famílias
+          importadas passam a apontar para a pessoa que já estava na base, pelo que importar o
+          mesmo ficheiro duas vezes não muda nada. No fim, um resumo indica quantas pessoas,
+          famílias, eventos e locais entraram, e os avisos.
+        </p>
+        <div class="note">
+          Quando a base ainda não tem pessoa central, a <strong>primeira pessoa do ficheiro</strong>
+          passa a ser a raiz — em geral a que o programa de origem lista primeiro. Importar para uma
+          base em uso não muda o centro atual.
+        </div>
+
+        <h2 id="exportar">13. Exportar tudo</h2>
+        <p><em>Exportar tudo…</em> grava um único <code>.zip</code> com:</p>
+        <ul>
+          <li><code>dados.json</code> — todas as tabelas da base, em JSON legível;</li>
+          <li><code>arvore.ged</code> — os mesmos dados em GEDCOM 5.5.1;</li>
+          <li><code>media\</code> — todos os ficheiros de fotografias e documentos.</li>
+        </ul>
+        <p>É o arquivo recomendado para uma investigação terminada e a forma mais simples de mudar uma árvore de computador.</p>
+
+        <h2 id="copias">14. Cópias de segurança e os seus dados</h2>
+        <ul>
+          <li>Antes de qualquer acção destrutiva a aplicação grava uma cópia completa em <code>backups\familytree-AAAAMMDD-HHMMSS.db</code> e mantém as últimas 10. Não há ecrã de restauro: copie um instantâneo sobre <code>familytree.db</code> com a aplicação fechada.</li>
+          <li>Os instantâneos cobrem apenas a base. <strong>A unidade a salvaguardar é a pasta inteira</strong> — <code>familytree.db</code> mais <code>media\</code> — ou o zip de <em>Exportar tudo…</em>.</li>
+          <li>Não guarde uma base em uso dentro do OneDrive, Google Drive ou Dropbox: sincronizar uma base aberta pode corrompê-la. Trabalhe localmente e deixe a pasta sincronizada guardar os zips exportados.</li>
+        </ul>
+
+        <h2 id="atalhos">15. Teclado e rato</h2>
+        <table class="keys">
+          <thead>
+            <tr><th>Onde</th><th>Acção</th><th>O que faz</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Leque</td><td>Roda</td><td>Zoom</td></tr>
+            <tr><td>Leque</td><td>Arrastar</td><td>Mover</td></tr>
+            <tr><td>Leque</td><td><kbd>Enter</kbd> num sector focado</td><td>Abrir a pessoa</td></tr>
+            <tr><td>Árvores</td><td>Roda / arrastar / clique</td><td>Zoom, mover, recentrar</td></tr>
+            <tr><td>Visor de imagens</td><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Ampliar / reduzir</td></tr>
+            <tr><td>Visor de imagens</td><td><kbd>0</kbd> / <kbd>1</kbd></td><td>Ajustar / 100%</td></tr>
+            <tr><td>Visor de imagens</td><td><kbd>R</kbd></td><td>Rodar 90°</td></tr>
+            <tr><td>Qualquer janela</td><td><kbd>Esc</kbd></td><td>Fechar o diálogo ou a vista</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="problemas">16. Resolução de problemas</h2>
+        <h3>"Esquema da base de dados incompatível"</h3>
+        <p>
+          O ficheiro foi escrito por uma versão mais recente da aplicação. Atualize o FamilyTree ou
+          abra uma cópia com a versão que o criou.
+        </p>
+        <h3>Uma fotografia aparece com um ícone quebrado</h3>
+        <p>
+          O registo existe mas o ficheiro falta em <code>media\</code>. Reponha o ficheiro com o
+          mesmo nome ou adicione a imagem outra vez (o hash mantém o mesmo registo).
+        </p>
+        <h3>A aplicação parece lenta numa base grande</h3>
+        <p>
+          Abrir uma vista lê a base inteira uma vez. Mantenha a base fora de pastas sincronizadas e
+          evite abri-la duas vezes; a tabela é paginada e as vistas mostram "a carregar" apenas
+          quando a consulta demora mais de 300 ms.
+        </p>
+        <h3>Eliminei uma pessoa por engano</h3>
+        <p>
+          Feche a aplicação e copie o ficheiro mais recente de <code>backups\</code> sobre
+          <code>familytree.db</code>. Perde as alterações feitas depois desse instantâneo.
+        </p>
+        <h3>Avisos do SmartScreen ou do antivírus</h3>
+        <p>
+          O instalador ainda não está assinado; escolha <em>Mais informações → Executar mesmo
+          assim</em>. Se a sua organização bloquear instaladores sem assinatura, peça uma exceção ao
+          administrador.
+        </p>
+
+        <h2 id="ajuda">17. Comentários e ajuda</h2>
+        <p>
+          Sugestões, erros e funcionalidades em falta são bem-vindos — use o formulário de
+          comentários. Ao reportar um problema, indique a versão, o que estava a fazer e se a base
+          veio de uma importação GEDCOM.
+        </p>
+        <p>
+          <a class="btn primary" href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Enviar comentários</a>
+          <a class="btn ghost" href="../FamilyTree_1.1.0_x64_en-US.msi" download>Transferir o FamilyTree 1.1.0</a>
+        </p>
+
+        <nav class="doc-nav" aria-label="Navegação da página">
+          <a href="../index.html">← Voltar à apresentação</a>
+          <a href="../documentation.html" hreflang="en" lang="en">Read in English →</a>
+        </nav>
+      </main>
+    </div>
+
+    <footer class="site">
+      <div class="wrap">
+        <span>FamilyTree v1.1.0 · 27 de novembro de 2026</span>
+        <span>
+          <a href="../index.html">Apresentação</a> ·
+          <a href="https://forms.gle/ADcQSqGmD479ZSzAA" target="_blank" rel="noopener">Comentários</a> ·
+          <a href="../documentation.html" hreflang="en" lang="en">English</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
